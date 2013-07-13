@@ -1,18 +1,8 @@
-FLAGS = -Wall -g
-#HEADERS = allegro5/allegro.h
+FLAGS= -Wall -g
 
-#default: program
-
-#%.o: %.c $(HEADERS)
-#	gcc -c $< -o $@
-
-#program: $(OBJECTS)
-#	gcc $(OBJECTS) -o $@ `pkg-config --cflags --libs allegro5`
-
-all:
-	make katame 
+katame.o: katame.c
+	gcc -Wall -o katame.o katame.c `pkg-config --cflags --libs allegro-5.0` 
 
 clean:
-	#rm -f $(OBJECTS)
-	#rm -f program
-	rm -f katame
+	rm -f katame.o
+	rm -f katame.exe

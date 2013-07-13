@@ -9,7 +9,7 @@ int main(int argc, char **argv){
 		return -1;
 	}
 	
-	display = al_create_display(640, 480);
+	display = al_create_display(800, 600);
 	if(!display){
 		fprintf(stderr, "failed to create display!\n");
 		return -1;
