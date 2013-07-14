@@ -1,6 +1,6 @@
 SDLHEADERS ?= /usr/include/SDL
 CFLAGS := -std=c11 -Wall -pipe -I$(SDLHEADERS)
-LIBS := -lSDL -lSDLmain -lSDL_image -lSDL_ttf -lSDL_mixer -lSDL_gfx -lm
+LIBS := -lSDL -lSDLmain -lSDL_image -lSDL_ttf -lSDL_mixer -lm
 .PHONY : clean install uninstall
 katame : obj
 	$(CC) $(CFLAGS) $(LIBS) katame.o -o katame
