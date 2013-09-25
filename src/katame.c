@@ -1,46 +1,39 @@
-#include <stdio.h>
-#include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
-#include "SDL/SDL_mixer.h"
+/**
+ * @author: Kamil Żak - defm03 (defm03@outlook.jp)
+ * release: 25-09-2013
+ */
+
+#include "katame.h"
+
+extern int gfx_Init_SDL(void);
+extern void gfx_Init_Image(void);
+extern void gfx_Init_Screen(void);
+extern void gfx_image_Draw(char);
+extern void audio_Init_Mixer(void);
 
 int main(int argc, char* args[]){
-	 
-	printf("Initializing SDL...\n");
-	if((SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) == -1)){
-		printf("Could not initialize SDL %s.\n", SDL_GetError());
-		exit(-1);
-	} /* initialization of sdl */
-	printf("SDL initialized.\n");
-	
-	int imgflags = IMG_INIT_JPG | IMG_INIT_PNG;
-	int imginit=IMG_Init(imgflags);	/* initialization for sdl_image */ 
-	if(imginit&&imgflags != imgflags){
-		printf("IMG_Init: Failed to init required jpg and png support!\n");
-		printf("IMG_Init: %s\n", IMG_GetError());
-	} /* error handling */
 
-	int mixflags = MIX_INIT_OGG|MIX_INIT_MOD;
-	int mixinit=Mix_Init(mixflags); /* initialization for sdl_mixer */
-	if(mixinit&&mixflags != mixflags){
-		printf("Mix_Init: Failed to init required ogg and mod support!\n");
-		printf("Mix_Init: %s\n", Mix_GetError());
-	} /* error handling */
+	printf("Initializing SDL...\n");
+	if (gfx_Init_SDL() == 0) { printf("SDL initialized.\n"); }
+	else { printf("Error initializing, ending."); exit(0); } // error handler 
+	
+	gfx_Init_Image();
+	audio_Init_Mixer();
 
 	/* SDL_Surface variables */
 	SDL_Surface* screen = NULL;
 	SDL_Surface* image	= NULL;
 	
+	/* Image load */
+	char image_one[] = "sample.png";
+	char image_two[] = "yesand.png";
 
-	image = IMG_Load("sample.png");
-	if(!image){
-		printf("IMG_Load: %s\n", IMG_GetError());
-	} /* error handling */
+	gfx_Init_Screen();
 
-	screen = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);
-	if(!screen){
-		printf("Screen initialization: %s\n", IMG_GetError());
-	} /* error handling */
+	image_Draw(image_two);
+	image_Draw(image_one);
 
+	audio_Init_Mixer();
 
 	while(SDL_BlitSurface(image, NULL, screen, NULL) == -2){
 		while(SDL_LockSurface(image) < 0){SDL_Delay(10);}
@@ -54,5 +47,4 @@ int main(int argc, char* args[]){
 	SDL_Quit();
 	
 	return 0;
-
 }
